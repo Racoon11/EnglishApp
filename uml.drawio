@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net" modified="2023-10-05T13:16:26.695Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.47" etag="ciyTUfGZ_eyOjs2NXzWS" version="22.0.2" type="device">
+  <diagram name="Страница — 1" id="Wo-3GQcv09PQ1knDRX87">
+    <mxGraphModel dx="750" dy="415" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="5000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Wi-vcoycW4LsgxpBkQx9-1" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="200" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wi-vcoycW4LsgxpBkQx9-6" value="" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;exitX=0.581;exitY=0.36;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="Wi-vcoycW4LsgxpBkQx9-1">
+          <mxGeometry width="60" relative="1" as="geometry">
+            <mxPoint x="330" y="220" as="sourcePoint" />
+            <mxPoint x="300" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
