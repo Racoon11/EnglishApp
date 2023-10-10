@@ -3,6 +3,8 @@ package com.example.EnglishApp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public record UserLK (String nick, int date, int learntWords){
+import org.springframework.data.annotation.Id;
+
+public record UserLK (@Id Long id, Double amount){
     
 }

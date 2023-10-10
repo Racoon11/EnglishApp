@@ -12,18 +12,18 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CashCardApplicationTests {
+class EnglishAppApplicationTests {
     @Autowired
     TestRestTemplate restTemplate;
 
     @Test
     void shouldReturnACashCardWhenDataIsSaved() {
-        ResponseEntity<String> response = restTemplate.getForEntity("/LK/Name", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/LK/99", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
-		Number id = documentContext.read("$.date");
+		Number id = documentContext.read("$.id");
 		assertThat(id).isNotNull();
     }
 	@Test

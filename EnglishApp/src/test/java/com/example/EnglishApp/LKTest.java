@@ -16,27 +16,26 @@ public class LKTest {
 
     @Test
     public void cashCardSerializationTest() throws IOException {
-        UserLK cashCard = new UserLK("Name", 10, 20);
+        UserLK cashCard = new UserLK(99L, 10.0);
         //assertThat(json.write(cashCard)).isStrictlyEqualToJson( "C:\\Users\\Cake\\EnglishApp\\EnglishApp\\src\\test\\java\\com\\example\\EnglishApp\\expected.json");
-        assertThat(json.write(cashCard)).hasJsonPathStringValue("@.nick");
-        assertThat(json.write(cashCard)).extractingJsonPathStringValue("@.nick")
-                .isEqualTo("Name");
-        assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.date");
-        assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.date")
-             .isEqualTo(10);
+        assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.id");
+        assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.id")
+                .isEqualTo(99);
+        assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.amount");
+        assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.amount")
+             .isEqualTo(10.0);
     }
     @Test
     public void cashCardDeserializationTest() throws IOException {
         String expected = """
                 {
-                    "nick":"Name",
-                    "date":10,
-                    "learntWords":20
+                    "id":99,
+                    "amount":10.0
                 }
                 """;
         assertThat(json.parse(expected))
-                .isEqualTo(new UserLK("Name", 10, 20));
-        assertThat(json.parseObject(expected).date()).isEqualTo(10);
-        assertThat(json.parseObject(expected).learntWords()).isEqualTo(20);
+                .isEqualTo(new UserLK(99L, 10.0));
+        assertThat(json.parseObject(expected).amount()).isEqualTo(10.0);
+        assertThat(json.parseObject(expected).id()).isEqualTo(99);
     }
 }
