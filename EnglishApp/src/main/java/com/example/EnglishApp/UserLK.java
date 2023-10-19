@@ -5,6 +5,6 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
-public record UserLK (@Id Long id, Double amount){
+public record UserLK (@Id Long id, Double amount, String owner){
     
 }

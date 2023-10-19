@@ -16,7 +16,7 @@ public class LKTest {
 
     @Test
     public void cashCardSerializationTest() throws IOException {
-        UserLK cashCard = new UserLK(99L, 10.0);
+        UserLK cashCard = new UserLK(99L, 10.0, "sarah1");
         //assertThat(json.write(cashCard)).isStrictlyEqualToJson( "C:\\Users\\Cake\\EnglishApp\\EnglishApp\\src\\test\\java\\com\\example\\EnglishApp\\expected.json");
         assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.id");
         assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.id")
@@ -30,11 +30,12 @@ public class LKTest {
         String expected = """
                 {
                     "id":99,
-                    "amount":10.0
+                    "amount":10.0,
+                    "owner":"sarah1"
                 }
                 """;
         assertThat(json.parse(expected))
-                .isEqualTo(new UserLK(99L, 10.0));
+                .isEqualTo(new UserLK(99L, 10.0, "sarah1"));
         assertThat(json.parseObject(expected).amount()).isEqualTo(10.0);
         assertThat(json.parseObject(expected).id()).isEqualTo(99);
     }
