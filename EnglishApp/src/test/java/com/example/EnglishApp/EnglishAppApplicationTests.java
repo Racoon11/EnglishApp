@@ -2,13 +2,18 @@ package com.example.EnglishApp;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+
+import org.apache.catalina.connector.Response;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+
 
 import net.minidev.json.JSONArray;
 
@@ -126,5 +131,74 @@ class EnglishAppApplicationTests {
         .getForEntity("/LK/102", String.class); // kumar2's data
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
+
+    @Test
+    @DirtiesContext
+    void shouldUpdateLK(){
+        UserLK cashCardUpdate = new UserLK(null, 19.99, null);
+        HttpEntity<UserLK> request = new HttpEntity<>(cashCardUpdate);
+        ResponseEntity<Void> response = restTemplate
+                .withBasicAuth("sarah1", "abc123")
+                .exchange("/LK/99", HttpMethod.PUT, request, Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+
+        ResponseEntity<String> response2 = restTemplate
+                .withBasicAuth("sarah1", "abc123")
+                .getForEntity("/LK/99", String.class);
+        
+        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
+        DocumentContext documentContext = JsonPath.parse(response2.getBody());
+        
+        Double amount = documentContext.read("$.amount");
+
+        assertThat(amount).isEqualTo(19.99);
+
+    }
+    @Test
+    void updateCashCardThatDoesNotExist(){
+        UserLK cashCardUpdate = new UserLK(null, 19.99, null);
+        HttpEntity<UserLK> request = new HttpEntity<>(cashCardUpdate);
+        ResponseEntity<Void> response = restTemplate
+                .withBasicAuth("sarah1", "abc123")
+                .exchange("/LK/12333", HttpMethod.PUT, request, Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+
+    @Test
+    @DirtiesContext
+    void shouldDeleteAnExistingCashCard() {
+
+        ResponseEntity<Void> response = restTemplate
+                .withBasicAuth("sarah1", "abc123")
+                .exchange("/LK/99", HttpMethod.DELETE, null, Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        
+        ResponseEntity<String> getResponse = restTemplate
+            .withBasicAuth("sarah1", "abc123")
+            .getForEntity("/LK/99", String.class);
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+}
+        @Test
+        void shouldNotDeleteACashCardThatDoesNotExist() {
+                ResponseEntity<Void> deleteResponse = restTemplate
+                        .withBasicAuth("sarah1", "abc123")
+                        .exchange("/LK/99999", HttpMethod.DELETE, null, Void.class);
+                assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+        @Test
+    void shouldNotAllowDeletionOfCashCardsTheyDoNotOwn() {
+        ResponseEntity<Void> deleteResponse = restTemplate
+                .withBasicAuth("sarah1", "abc123")
+                .exchange("/LK/102", HttpMethod.DELETE, null, Void.class);
+        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        ResponseEntity<String> getResponse = restTemplate
+                .withBasicAuth("kumar2", "xyz789")
+                .getForEntity("/LK/102", String.class);
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    
+}
 
 }

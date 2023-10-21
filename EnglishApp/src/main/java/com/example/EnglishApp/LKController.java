@@ -4,7 +4,6 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 //import java.sql.Date;
-import java.util.Optional;
 
 
 import org.springframework.data.domain.Page;
@@ -12,9 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,10 +37,10 @@ public class LKController {
     @GetMapping("/{nick}")
     public ResponseEntity<UserLK> findById(@PathVariable Long nick, Principal principal) {
 
-        Optional<UserLK> userOpt = Optional.ofNullable(lkRepository.findByIdAndOwner(nick, principal.getName()));
+        UserLK cashCard = findCashCard(nick, principal);
 
-        if (userOpt.isPresent()) {
-            return ResponseEntity.ok(userOpt.get());
+        if (cashCard != null) {
+            return ResponseEntity.ok(cashCard);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -72,6 +73,35 @@ public class LKController {
         ));
 
         return ResponseEntity.ok(page.getContent());
+    }
+
+    @PutMapping("/{requestedId}")
+    private ResponseEntity<Void> putCashCard(@PathVariable Long requestedId, @RequestBody UserLK cashCardUpdate, Principal principal){
+        UserLK cashCard = findCashCard(requestedId, principal);
+        if (cashCard != null){
+            UserLK upCashCard = new UserLK(cashCard.id(), cashCardUpdate.amount(), principal.getName());
+
+            lkRepository.save(upCashCard);
+
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+
+    }
+
+    private UserLK findCashCard(Long requestedId, Principal principal){
+
+        return lkRepository.findByIdAndOwner(requestedId, principal.getName());
+
+    }
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> deleteCashCard(@PathVariable Long id, Principal principal) {
+        if (!lkRepository.existsByIdAndOwner(id, principal.getName())) {
+            return ResponseEntity.notFound().build();
+        }
+        lkRepository.deleteById(id);
+        
+        return ResponseEntity.noContent().build();
     }
 
 }
