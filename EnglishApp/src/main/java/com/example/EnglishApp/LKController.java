@@ -11,8 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,32 +23,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.EnglishApp.dto.UserRegistrationDto;
+import com.example.EnglishApp.repository.UserRepository;
+import com.example.EnglishApp.words.UserLK;
+import com.example.EnglishApp.User.User;
 
-@RestController
+
+
+@Controller
 @RequestMapping("/LK")
 public class LKController {
 
-    //private static final String K = null;
-    // private LKRepository lkRepository;
+    private UserRepository lkRepository;
 
-    // public LKController(LKRepository lkRepository) {
-    //     this.lkRepository = lkRepository;
-    // }
+    public LKController(UserRepository lkRepository) {
+        super();
+        this.lkRepository = lkRepository;
+    }
 
+    @GetMapping
+	public ResponseEntity<User> showRegistrationForm(Principal principal) {
 
-    // @GetMapping("/{nick}")
-    // public ResponseEntity<UserLK> findById(@PathVariable String nick, Principal principal){
+		User user = lkRepository.findByEmail(principal.getName());
 
-    //     UserLK user = lkRepository.findByNick(nick);
-    //     if (user != null) {
-    //         return ResponseEntity.ok(user);
-    //     }
-    //     return ResponseEntity.notFound().build();
-        
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.notFound().build();
+	}
 
-    // }
+    @GetMapping("/{nick}")
+    public ResponseEntity<User> findById(@PathVariable String nick, Principal principal){
 
-    
+        User user = lkRepository.findByEmail(nick);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.notFound().build();
+
+    }
+
 
 
     // @GetMapping("/{nick}")

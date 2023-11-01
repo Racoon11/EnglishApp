@@ -6,6 +6,9 @@ public class UserRegistrationDto {
 	private String lastName;
 	private String email;
 	private String password;
+	private String date;
+	private int words;
+	private String level;
 
 	public UserRegistrationDto() {
 
@@ -41,5 +44,26 @@ public class UserRegistrationDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public int getWords() {
+		return words;
+	}
+
+	public void setWords(int words) {
+		this.words = words;
+	}
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 }

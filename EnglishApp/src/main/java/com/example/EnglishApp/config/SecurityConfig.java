@@ -9,11 +9,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.EnglishApp.dto.UserRegistrationDto;
 import com.example.EnglishApp.service.UserService;
+import com.example.EnglishApp.words.LKRepository;
+import com.example.EnglishApp.words.UserLK;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private LKRepository lkRepository;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -36,6 +45,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
+	@Bean
+    public void testOnlyUsers() {
+        
+		UserRegistrationDto registrationDto = new UserRegistrationDto();
+		registrationDto.setEmail("s");
+		registrationDto.setFirstName("s");
+		registrationDto.setLastName("s");
+		registrationDto.setPassword("s");
+		userService.save(registrationDto);
+
+		UserLK us = new UserLK("s", "s");
+		lkRepository.save(us);
+    }
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

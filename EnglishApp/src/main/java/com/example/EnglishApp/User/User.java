@@ -1,6 +1,7 @@
 package com.example.EnglishApp.User;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,6 +29,15 @@ public class User {
 
 	@Column(name = "last_name")
 	private String lastName;
+
+	@Column(name = "level")
+	private String level = "Beginner";
+
+	@Column(name = "date")
+	private String date = (new Date()).toString();
+
+	@Column(name = "words")
+	private int words = 0;
 
 	private String email;
 
@@ -96,6 +106,26 @@ public class User {
 
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public int getWords() {
+		return words;
+	}
+
+	public void setWords(int words) {
+		this.words = words;
 	}
 
 }
