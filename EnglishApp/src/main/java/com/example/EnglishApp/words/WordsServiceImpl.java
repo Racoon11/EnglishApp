@@ -32,7 +32,8 @@ public class WordsServiceImpl implements WordsService {
 	@Override
 	public UserLK save(WordsRegistrationDto registrationDto) {
 
-		UserLK user = new UserLK(registrationDto.getFirstName(), registrationDto.getEmail());
+		UserLK user = new UserLK(registrationDto.getEmail(), 
+				registrationDto.getWordEng(), registrationDto.getWordRus());
 
 		return userRepository.save(user);
 	}

@@ -54,7 +54,7 @@ public class RegistrationController {
 	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto, @ModelAttribute("words") WordsRegistrationDto wordsRegistrationDto) {
 
 		userService.save(registrationDto);
-		wordsService.save(wordsRegistrationDto);
+		//wordsService.save(wordsRegistrationDto);
 		return "redirect:/registration?success";
 	}
 	

@@ -13,6 +13,7 @@
 package com.example.EnglishApp.words;
  
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,8 +36,17 @@ public class UserLK {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "nick")
-	private String nick;
+	@Column(name = "wordEng")
+	private String wordEng;
+
+	@Column(name = "wordRus")
+	private String wordRus;
+
+	@Column(name = "whenToTrain")
+	private long whenToTrain;
+
+	@Column(name = "count")
+	private int count;
 
 
 	private String email;
@@ -45,10 +55,12 @@ public class UserLK {
 
 	}
 
-	public UserLK(String firstName, String email) {
-
-		this.nick = firstName;
+	public UserLK(String email, String wordEng, String wordRus) {
 		this.email = email;
+		this.wordEng = wordEng;
+		this.wordRus = wordRus;
+		this.count = 0;
+		this.whenToTrain = (new Date()).getTime();
 	}
 
 	public Long getId() {
@@ -59,14 +71,6 @@ public class UserLK {
 		this.id = id;
 	}
 
-	public String getNick() {
-		return nick;
-	}
-
-	public void setNick(String firstName) {
-		this.nick = firstName;
-	}
-
 
 	public String getEmail() {
 		return email;
@@ -74,6 +78,36 @@ public class UserLK {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getWordEng() {
+		return wordEng;
+	}
+
+	public void setWordEng(String wordEng) {
+		this.wordEng = wordEng;
+	}
+
+	public String getWordRus() {
+		return wordRus;
+	}
+
+	public void setWordRus(String wordEng) {
+		this.wordRus = wordEng;
+	}
+
+	public long getWhenToTrain() {
+		return whenToTrain;
+	}
+
+	public void setWhenToTrain(long whenToTrain) {
+		this.whenToTrain = whenToTrain;
+	}
+	public int getCounty() {
+		return count;
+	}
+
+	public void setCount(int c) {
+		this.count = c;
 	}
 
 }

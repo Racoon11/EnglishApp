@@ -7,7 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface LKRepository extends JpaRepository<UserLK, Long> {
-    UserLK findByIdAndNick(Long id, String nick);
+    //UserLK findByIdAndNick(Long id, String nick);
     UserLK findByEmail(String email);
-    //Page<UserLK> findByOwner(String owner, PageRequest amount);
+    //Boolean findByEmail(String email);
+    Page<UserLK> findAllByEmail(String email, PageRequest amount);
 }

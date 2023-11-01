@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		registrationDto.setPassword("s");
 		userService.save(registrationDto);
 
-		UserLK us = new UserLK("s", "s");
-		lkRepository.save(us);
+		// UserLK us = new UserLK("s", "s");
+		// lkRepository.save(us);
     }
 
 	@Override
