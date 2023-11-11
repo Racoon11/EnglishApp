@@ -21,12 +21,10 @@ import com.example.EnglishApp.words.WordsService;
 public class RegistrationController {
 
 	private UserService userService;
-	private WordsService wordsService;
 
-	public RegistrationController(UserService userService, WordsService wordsService) {
+	public RegistrationController(UserService userService) {
 		super();
 		this.userService = userService;
-		this.wordsService = wordsService;
 	}
 
 	@ModelAttribute("user")
@@ -34,27 +32,15 @@ public class RegistrationController {
 		return new UserRegistrationDto();
 	}
 
-	@ModelAttribute("words")
-	public WordsRegistrationDto wordsRegistrationDto() {
-		return new WordsRegistrationDto();
-	}
-
 	@GetMapping
 	public String showRegistrationForm() {
-		// UserRegistrationDto registrationDto = new UserRegistrationDto();
-		// registrationDto.setEmail("s");
-		// registrationDto.setFirstName("s");
-		// registrationDto.setLastName("s");
-		// registrationDto.setPassword("s");
-		// userService.save(registrationDto);
 		return "registration";
 	}
 
 	@PostMapping
-	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto, @ModelAttribute("words") WordsRegistrationDto wordsRegistrationDto) {
+	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
 
 		userService.save(registrationDto);
-		//wordsService.save(wordsRegistrationDto);
 		return "redirect:/registration?success";
 	}
 	

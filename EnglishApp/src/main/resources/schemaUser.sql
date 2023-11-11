@@ -11,7 +11,7 @@ create table authorities (
 );
 
 create trable user_lk (
-	username varchar_ignorecase(50) not null primary key
+	username varchar_ignorecase(50) not null
 )
 
 create unique index ix_auth_username on authorities (username,authority);

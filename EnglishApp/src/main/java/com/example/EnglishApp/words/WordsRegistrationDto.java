@@ -8,8 +8,8 @@ public class WordsRegistrationDto {
 	private long whenToTrain;
 	private int count;
 
-	public WordsRegistrationDto() {
-
+	public WordsRegistrationDto(String email) {
+		this.email = email;
 	}
 
 

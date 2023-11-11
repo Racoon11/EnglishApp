@@ -29,7 +29,7 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = "user_lk", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "user_lk", uniqueConstraints = @UniqueConstraint(columnNames = "id"))
 public class UserLK {
 
 	@Id
