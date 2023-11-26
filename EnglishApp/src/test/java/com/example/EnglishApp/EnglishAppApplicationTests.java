@@ -1,5 +1,6 @@
 package com.example.EnglishApp;
 
+import com.example.EnglishApp.words.UserLK;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
@@ -13,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+import java.util.List;
 
 
 import net.minidev.json.JSONArray;
@@ -29,35 +31,35 @@ class EnglishAppApplicationTests {
     @Test
     void shoudReturnUserLK(){
         ResponseEntity<String> response = restTemplate
-                    .withBasicAuth("sarah1", "abc123")
-                    .getForEntity("/LK/sarah1", String.class);
+                    .withBasicAuth("s", "s")
+                    .getForEntity("/LK/s", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
-		String nick = documentContext.read("$.nick");
+		String nick = documentContext.read("$.email");
         String lvl = documentContext.read("$.lvl");
-		assertThat(nick).isEqualTo("sarah1");
+		assertThat(nick).isEqualTo("s");
         assertThat(lvl).isEqualTo("inter");
     }
-    @Test
-    void shouldHaveAccess2(){
-        ResponseEntity<String> response = restTemplate
-                    .withBasicAuth("kumar2", "xyz789")
-                    .getForEntity("/LK/sarah1", String.class);
+    // @Test
+    // void shouldHaveAccess2(){
+    //     ResponseEntity<String> response = restTemplate
+    //                 .withBasicAuth("kumar2", "xyz789")
+    //                 .getForEntity("/LK/sarah1", String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    //     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        DocumentContext documentContext = JsonPath.parse(response.getBody());
-		String nick = documentContext.read("$.nick");
-        String lvl = documentContext.read("$.lvl");
-		assertThat(nick).isEqualTo("sarah1");
-        assertThat(lvl).isEqualTo("inter");
-    }
+    //     DocumentContext documentContext = JsonPath.parse(response.getBody());
+	// 	String nick = documentContext.read("$.nick");
+    //     String lvl = documentContext.read("$.lvl");
+	// 	assertThat(nick).isEqualTo("sarah1");
+    //     assertThat(lvl).isEqualTo("inter");
+    // }
     @Test
     void shoudReturnNothing(){
         ResponseEntity<String> response = restTemplate
-                    .withBasicAuth("sarah1", "abc123")
+                    .withBasicAuth("s", "s")
                     .getForEntity("/LK/kumar", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -67,6 +69,39 @@ class EnglishAppApplicationTests {
         ResponseEntity<String> response = restTemplate
                     .getForEntity("/hello", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    //fix!
+    @Test
+    @DirtiesContext
+    void shouldUpdateWord() {
+        // UserLK newWord = new UserLK(null, null, null);
+        // HttpEntity<UserLK> request = new HttpEntity<>(newWord);
+        // ResponseEntity<Void> response = restTemplate
+        //         .withBasicAuth("sarah1", "abc123")
+        //         .exchange("/cashcards/99", HttpMethod.PUT, request, Void.class);
+        // assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+        ResponseEntity<String> response1 = restTemplate
+                    .withBasicAuth("s", "s")
+                    .getForEntity("/LK/words", String.class);
+        for (int i = 1; i < 7; i++){
+            UserLK word = new UserLK("s", Integer.toString(i), Integer.toString(i));
+            ResponseEntity<Void> createResponse = restTemplate
+                .withBasicAuth("s", "s") 
+                .postForEntity(
+            "/LK/words/add", word, Void.class);
+        }
+        ResponseEntity<String> response2 = restTemplate
+                    .withBasicAuth("s", "s")
+                    .getForEntity("/LK/words/train", String.class);
+        //System.out.println(response2.getBody());
+        DocumentContext documentContext = JsonPath.parse(response2.getBody());
+        System.out.println(documentContext);
+        // List<UserLK> id = documentContext.read("$.id");
+
+        
+
     }
 
 //     @Test

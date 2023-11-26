@@ -63,6 +63,16 @@ public class UserLK {
 		this.whenToTrain = (new Date()).getTime();
 	}
 
+	public UserLK(Long id, String email, String wordEng, String wordRus, long whenToTrain, int count) {
+		this.id = id;
+		this.email = email;
+		this.wordEng = wordEng;
+		this.wordRus = wordRus;
+		this.whenToTrain = whenToTrain;
+		this.count = count;
+		this.whenToTrain = (new Date()).getTime();
+	}
+
 	public Long getId() {
 		return id;
 	}

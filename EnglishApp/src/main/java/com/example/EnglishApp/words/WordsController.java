@@ -1,6 +1,8 @@
 package com.example.EnglishApp.words;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -8,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,5 +81,38 @@ public class WordsController {
 		//wordsService.save(wordsRegistrationDto);
         return "redirect:/LK/words/add";
 	}
+
+    @GetMapping("/train")
+    public ResponseEntity<List<UserLK>> returnWordsToTrain(Principal principal){
+        //this.email = principal.getName();
+        List<UserLK> page = lkRepository.findByEmail(principal.getName());
+        List<UserLK> ans = new ArrayList<UserLK>();
+
+        long now = (new Date()).getTime();
+        for (UserLK word : page){
+            if (ans.size() == 5) break;
+            if (word.getWhenToTrain() < now){
+                ans.add(word);
+            }
+        }
+        return ResponseEntity.ok(ans);
+
+    }
+
+    //needs testing
+    @PutMapping("/")
+    private ResponseEntity<Void> putCashCard(@RequestBody UserLK[] wordsToUpdate, Principal principal) {
+        int[] times = new int[] {1*24*60*60, 3*24*60*60, 7*24*60*60, 30*24*60*60};
+
+
+        for (UserLK word : wordsToUpdate){
+            //UserLK word1 = lkRepository.findByIdAndEmail(word.getId(), principal.getName());
+            UserLK updatedword = new UserLK(word.getId(), word.getEmail(), 
+                word.getWordEng(), word.getWordRus(), word.getWhenToTrain() + times[word.getCounty()], word.getCounty() + 1);
+            lkRepository.save(updatedword);
+        }
+        
+        return ResponseEntity.noContent().build();
+    }
 
 }
