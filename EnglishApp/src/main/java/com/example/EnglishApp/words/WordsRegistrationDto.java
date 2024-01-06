@@ -7,6 +7,7 @@ public class WordsRegistrationDto {
 	private String wordRus;
 	private long whenToTrain;
 	private int count;
+	private int mainID;
 
 	public WordsRegistrationDto(String email) {
 		this.email = email;
@@ -50,6 +51,14 @@ public class WordsRegistrationDto {
 
 	public void setCount(int c) {
 		this.count = c;
+	}
+
+	public int getMainID(){
+		return mainID;
+	}
+
+	public void setMainID(int id){
+		this.mainID = id;
 	}
 
 

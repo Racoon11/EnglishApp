@@ -48,6 +48,9 @@ public class UserLK {
 	@Column(name = "count")
 	private int count;
 
+	@Column(name = "mainID")
+	private int mainID;
+
 
 	private String email;
 
@@ -61,9 +64,18 @@ public class UserLK {
 		this.wordRus = wordRus;
 		this.count = 0;
 		this.whenToTrain = (new Date()).getTime();
+		this.mainID = -1;
+	}
+	public UserLK(String email, String wordEng, String wordRus, int mainID) {
+		this.email = email;
+		this.wordEng = wordEng;
+		this.wordRus = wordRus;
+		this.count = 0;
+		this.whenToTrain = (new Date()).getTime();
+		this.mainID = mainID;
 	}
 
-	public UserLK(Long id, String email, String wordEng, String wordRus, long whenToTrain, int count) {
+	public UserLK(Long id, String email, String wordEng, String wordRus, long whenToTrain, int count, int mainID) {
 		this.id = id;
 		this.email = email;
 		this.wordEng = wordEng;
@@ -71,6 +83,7 @@ public class UserLK {
 		this.whenToTrain = whenToTrain;
 		this.count = count;
 		this.whenToTrain = (new Date()).getTime();
+		this.mainID = mainID;
 	}
 
 	public Long getId() {
@@ -118,6 +131,14 @@ public class UserLK {
 
 	public void setCount(int c) {
 		this.count = c;
+	}
+
+	public int getMainID() {
+		return mainID;
+	}
+
+	public void setMainID(int i) {
+		this.mainID = i;
 	}
 
 }

@@ -45,19 +45,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
-	@Bean
-    public void testOnlyUsers() {
+	// @Bean
+    // public void testOnlyUsers() {
         
-		UserRegistrationDto registrationDto = new UserRegistrationDto();
-		registrationDto.setEmail("s");
-		registrationDto.setFirstName("s");
-		registrationDto.setLastName("s");
-		registrationDto.setPassword("s");
-		userService.save(registrationDto);
+	// 	UserRegistrationDto registrationDto = new UserRegistrationDto();
+	// 	registrationDto.setEmail("s");
+	// 	registrationDto.setFirstName("s");
+	// 	registrationDto.setLastName("s");
+	// 	registrationDto.setPassword("s");
+	// 	userService.save(registrationDto);
 
-		// UserLK us = new UserLK("s", "s");
-		// lkRepository.save(us);
-    }
+	// 	// UserLK us = new UserLK("s", "s");
+	// 	// lkRepository.save(us);
+    // }
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

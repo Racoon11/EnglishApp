@@ -108,7 +108,7 @@ public class WordsController {
         for (UserLK word : wordsToUpdate){
             //UserLK word1 = lkRepository.findByIdAndEmail(word.getId(), principal.getName());
             UserLK updatedword = new UserLK(word.getId(), word.getEmail(), 
-                word.getWordEng(), word.getWordRus(), word.getWhenToTrain() + times[word.getCounty()], word.getCounty() + 1);
+                word.getWordEng(), word.getWordRus(), word.getWhenToTrain() + times[word.getCounty()], word.getCounty() + 1, word.getMainID());
             lkRepository.save(updatedword);
         }
         
