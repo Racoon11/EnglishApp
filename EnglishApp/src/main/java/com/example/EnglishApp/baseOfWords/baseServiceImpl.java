@@ -1,5 +1,7 @@
-package com.example.EnglishApp.service;
+package com.example.EnglishApp.baseOfWords;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -18,23 +20,22 @@ import com.example.EnglishApp.User.User;
 import com.example.EnglishApp.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class baseServiceImpl implements baseService {
 
-	private UserRepository userRepository;
+	private baseOfWordsRepository userRepository;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
 
-	public UserServiceImpl(UserRepository userRepository) {
+	public baseServiceImpl(baseOfWordsRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
 	}
 
 	@Override
-	public User save(UserRegistrationDto registrationDto) {
+	public baseOfWords save(baseDto registrationDto) {
 
-		User user = new User(registrationDto.getFirstName(), registrationDto.getLastName(), registrationDto.getEmail(),
-				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
+
+		baseOfWords user = new baseOfWords(
+				registrationDto.getWordEng(), registrationDto.getWordRus());
 
 		return userRepository.save(user);
 	}
@@ -42,12 +43,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = userRepository.findByEmail(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("Invalid username or password.");
-		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				mapRolesToAuthorities(user.getRoles()));
+		baseOfWords user = userRepository.findByWordEng(username);
+		Collection<Role> col;
+		col = new ArrayList<>();
+		return new org.springframework.security.core.userdetails.User(user.getWordEng(),
+				username, mapRolesToAuthorities(col));
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
@@ -56,15 +56,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAll() {
+	public List<baseOfWords> getAll() {
 
-		return userRepository.findAll();
-	}
-
-	@Override
-	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return userRepository.findByEmail(email);
+		return (List<baseOfWords>) userRepository.findByWordEng("s");
 	}
 
 }
