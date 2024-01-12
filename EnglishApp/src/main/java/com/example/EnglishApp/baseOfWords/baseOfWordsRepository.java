@@ -12,4 +12,5 @@ public interface baseOfWordsRepository extends CrudRepository<baseOfWords, Long>
     //UserLK findByIdAndNick(Long id, String nick);
     Optional<baseOfWords> findById(Long id);
     baseOfWords findByWordEng(String wordEng);
+    List<baseOfWords> findFirst10ByWordEngStartingWith(String eng);
 }

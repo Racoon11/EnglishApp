@@ -13,4 +13,5 @@ public interface LKRepository extends CrudRepository<UserLK, Long> {
     UserLK findByIdAndEmail(Long id, String email);
     //Boolean findByEmail(String email);
     List<UserLK> findByEmail(String email);
+    boolean existsByIdAndEmail(Long id, String email);
 }

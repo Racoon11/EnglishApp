@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ import org.springframework.data.domain.PageRequest;
 
 
 @Controller
-@RequestMapping("/LK/words")
+@RequestMapping("/words")
 public class WordsController {
 
 
@@ -70,6 +71,7 @@ public class WordsController {
         // }
         // return ResponseEntity.notFound().build();
 	}
+
     @GetMapping("/add")
 	public String showRegistrationForm() {
 		return "addWord";
@@ -112,6 +114,15 @@ public class WordsController {
             lkRepository.save(updatedword);
         }
         
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> deleteWord(@PathVariable Long id,  Principal principal) {
+        if (!lkRepository.existsByIdAndEmail(id, principal.getName())) {
+            return ResponseEntity.notFound().build();
+        }
+        lkRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -18,6 +18,7 @@ public class HomeController {
 		return "index";
 	}
 
+
 	// @GetMapping("/LK/{nick}")
     // public ResponseEntity<UserLK> findById(@PathVariable String nick, Principal principal, @AuthenticationPrincipal UserDetails userDetails){
 

@@ -110,5 +110,13 @@ public class addWordsToBaseController {
         
         return ResponseEntity.ok(listOfWords);
     }
+
+
+    @GetMapping("/getBy")
+    public ResponseEntity<Iterable<baseOfWords>> getByString(@RequestParam String str) {
+        Iterable<baseOfWords> page = lkRepository.findFirst10ByWordEngStartingWith(str);
+        return ResponseEntity.ok(page);
+    }
+    
     
 }

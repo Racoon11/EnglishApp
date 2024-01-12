@@ -48,10 +48,11 @@ public class RegistrationController {
 
 
 	@GetMapping("/email")
-	public boolean emailIsTaken(@RequestParam(value = "name") String name) {
+	public ResponseEntity<String> emailIsTaken(@RequestParam(value = "name") String name) {
 		User em = userService.findByEmail(name);
-		if (em == null) return false;
-		else return true;
+		if (em == null) return ResponseEntity.ok("false");
+
+		else return ResponseEntity.ok("true");
 	}
 	
 }
